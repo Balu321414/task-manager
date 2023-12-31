@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "./Actions/index";
+import TaskForm from "./Components/TaskForm";
+import TaskList from "./Components/TaskList";
+import TaskModal from "./Components/TaskModal";
+import HamburgerMenu from "./Components/HamburgerMenu";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleAddTask = (task) => {
+    dispatch(actions.addTask(task));
+    setModalOpen(false);
+  };
+
+  const handleDeleteTask = (taskId) => {
+    dispatch(actions.deleteTask(taskId));
+  };
+
+  const handleUpdateTask = (task) => {
+    dispatch(actions.updateTask(task));
+    setModalOpen(false);
+  };
+
+  const handleEditTask = (task) => {
+    setSelectedTask(task);
+    setModalOpen(true);
+  };
+
+  const handleToggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>Task Manager</h1>
+      <HamburgerMenu isMenuOpen={isMenuOpen}  onToggle={handleToggleMenu}  />
+            {isMenuOpen && (
+        <div className="menu-list">
+          <ul>
+            <li>Add Task</li>
+            <li>Update Task</li>
+            <li>Delete Task</li>
+            <li>Tasks List</li>
+          </ul>
+        </div>
+      )}
+      <TaskList
+        tasks={tasks}
+        onDelete={handleDeleteTask}
+        onUpdate={handleEditTask}
+      />
+      <TaskForm onSubmit={handleAddTask} />
+      {modalOpen && (
+        <TaskModal
+          task={selectedTask}
+          onClose={() => {
+            setModalOpen(false);
+            setSelectedTask(null);
+          }}
+          onSubmit={handleUpdateTask}
+        />
+      )}
     </div>
   );
-}
+};
 
 export default App;

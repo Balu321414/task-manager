@@ -1,0 +1,32 @@
+.hamburger-button {
+  background: black;
+  border: black solid 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  width: fit-content;
+  margin-left: 34rem;
+}
+.hamburger-button:hover {
+  background-color: black !important;
+}
+
+.bar {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: 0.5s;
+}
+
+.hamburger-button.open .bar:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger-button.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-button.open .bar:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+

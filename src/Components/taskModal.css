@@ -1,0 +1,17 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid cadetblue;
+  box-shadow: 0 0 15px black;
+  border-radius: 30px;
+  width: fit-content;
+  margin-left: 5rem;
+}
+.modal-btn {
+  display: flex;
+  gap: 10px;
+  margin-left: 10rem;
+}
