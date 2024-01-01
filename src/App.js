@@ -11,6 +11,7 @@ const App = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks);
   const [modalOpen, setModalOpen] = useState(false);
+  const [indexValue, setIndexValue] = useState();
   const [selectedTask, setSelectedTask] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -28,8 +29,9 @@ const App = () => {
     setModalOpen(false);
   };
 
-  const handleEditTask = (task) => {
+  const handleEditTask = (task, index) => {
     setSelectedTask(task);
+    setIndexValue(index);
     setModalOpen(true);
   };
 
@@ -40,8 +42,8 @@ const App = () => {
   return (
     <div className="app">
       <h1>Task Manager</h1>
-      <HamburgerMenu isMenuOpen={isMenuOpen}  onToggle={handleToggleMenu}  />
-            {isMenuOpen && (
+      <HamburgerMenu isMenuOpen={isMenuOpen} onToggle={handleToggleMenu} />
+      {isMenuOpen && (
         <div className="menu-list">
           <ul>
             <li>Add Task</li>
@@ -59,6 +61,7 @@ const App = () => {
       <TaskForm onSubmit={handleAddTask} />
       {modalOpen && (
         <TaskModal
+          indexValue={indexValue}
           task={selectedTask}
           onClose={() => {
             setModalOpen(false);
